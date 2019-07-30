@@ -1,0 +1,30 @@
+{
+  "name": "ppc-lead-scrapper",
+  "version": "1.0.0",
+  "description": "A simple PPC lead scrapper using Apollo server express and Puppetier",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node ./index.js"
+  },
+  "keywords": [
+    "PPC",
+    "lead",
+    "scrapper"
+  ],
+  "author": "Gustavo Gomez",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-express": "^2.8.0",
+    "express": "^4.17.1",
+    "graphql": "^14.4.2",
+    "puppeteer": "^1.19.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
+    "nodemon": "^1.19.1"
+  }
+}
