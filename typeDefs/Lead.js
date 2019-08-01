@@ -4,6 +4,7 @@ export default gql`
     type Lead {
       adName: String
       adLink: String
+      adPhones: [String]
     }
 
     extend type Query {
