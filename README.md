@@ -13,7 +13,7 @@ JavaScript Standard
 * [express](https://expressjs.com/en/4x/api.html) - The web framework used
 * [apollo-server-express](https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express) - The Express integration of GraphQL Server
 * [graphql](https://github.com/graphql/graphql-js) - The JavaScript reference implementation for GraphQL
-* [puppeteer]https://github.com/GoogleChrome/puppeteer) - Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol.
+* [puppeteer](https://github.com/GoogleChrome/puppeteer) - Node library which provides a high-level API to control Chrome or Chromium over the DevTools Protocol.
 
 ## Contributing
 
