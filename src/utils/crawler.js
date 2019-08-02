@@ -79,10 +79,14 @@ export default async (
 
     let completeItems = []
     for (let x of final) {
-      if (!x.adLink.includes('googleadservices') && x.adLink.includes('www')) {
-        await page.goto(x.adLink)
+      if (!x.adLink.includes('googleadservices') && x.adLink.includes('http') && x.adLink.includes('https')) {
+        try {
+          await page.goto(x.adLink)
+        } catch (e) {
+          console.log(e)
+        }
         let completeData = await page.evaluate(() => {
-          let phoneRegex = /\(?([0-9]{3})\)?([ -]?)([0-9]{3})([ -])([0-9]{4})/
+          let phoneRegex = /\(?([0-9]{3})\)?([ -.]?)([0-9]{3})([ -.])([0-9]{4})/
           let phones = []
           let phoneArray = Array.from(document.querySelectorAll('*'))
           for (let l of phoneArray) {
