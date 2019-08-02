@@ -2,9 +2,11 @@
   "name": "ppc-lead-scrapper",
   "version": "1.0.0",
   "description": "A simple PPC lead scrapper using Apollo server express and Puppetier",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./index.js"
+    "start": "node ./dist/server.bundle.js",
+    "dev": "webpack | nodemon dist/server.bundle.js",
+    "build": "webpack"
   },
   "keywords": [
     "PPC",
@@ -14,17 +16,25 @@
   "author": "Gustavo Gomez",
   "license": "MIT",
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "apollo-server-express": "^2.8.0",
+    "core-js": "^3.1.4",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "puppeteer": "^1.19.0"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "src/*"
+    ]
+  },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.5.5",
-    "nodemon": "^1.19.1"
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "babel-loader": "^8.0.4",
+    "nodemon": "^1.18.9",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }
