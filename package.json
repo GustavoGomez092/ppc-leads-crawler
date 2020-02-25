@@ -4,8 +4,8 @@
   "description": "A simple PPC lead scrapper using Apollo server express and Puppetier",
   "main": "./src/index.js",
   "scripts": {
-    "start": "node ./dist/server.bundle.js",
-    "dev": "webpack | nodemon dist/server.bundle.js",
+    "start": "webpack & pm2 start ecosystem.config.js",
+    "dev": "webpack --watch | nodemon dist/server.bundle.js",
     "build": "webpack"
   },
   "keywords": [
@@ -18,8 +18,10 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "apollo-server-express": "^2.8.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
+    "mongoose": "^5.9.2",
     "puppeteer": "^1.19.0"
   },
   "nodemonConfig": {
