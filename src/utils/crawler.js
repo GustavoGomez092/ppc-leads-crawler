@@ -8,7 +8,7 @@ export default async (
   city,
   pagesToCrawl
 ) => {
-  const browser = await puppeteer.launch({ headless: false, slowMo: 200 })
+  const browser = await puppeteer.launch({ headless: true, slowMo: 200 })
   const page = await browser.newPage()
   try {
     // check what parameters were sent and build string
@@ -107,6 +107,7 @@ export default async (
     }
     await page.close()
     await browser.close()
+
     return completeItems
   } catch (error) {
     console.log(error)
