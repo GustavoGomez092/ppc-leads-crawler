@@ -81,7 +81,7 @@ export default async (
     for (const x of final) {
       if (!x.adLink.includes('googleadservices') && x.adLink.includes('http') && x.adLink.includes('https')) {
         try {
-          await page.goto(x.adLink)
+          await page.goto(x.adLink).setDefaultNavigationTimeout(60 * 1000)
         } catch (e) {
           console.log(e)
         }
