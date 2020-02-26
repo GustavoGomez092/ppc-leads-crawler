@@ -5,6 +5,7 @@ export default gql`
       adName: String
       adLink: String
       adPhones: [String]
+      adEmails: [String]
     }
 
     extend type Query {
