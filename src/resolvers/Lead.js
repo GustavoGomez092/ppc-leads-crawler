@@ -7,8 +7,10 @@ export default {
     findLeads: async (root, { service, lastName, zipCode, state, city, pagesToCrawl = 10 }, context, info) => {
       try {
         const leads = await crawler(service, lastName, zipCode, state, city, pagesToCrawl)
-        console.log(leads)
-        await leadModel.insertMany(leads, { ordered: false, rawResult: true })
+
+        for (const lead of leads) {
+          await leadModel.create(lead)
+        }
 
         const count = await leadModel.estimatedDocumentCount()
         return count
