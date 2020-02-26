@@ -21,10 +21,10 @@ export default async (
       }
     })
 
-    let query = finalArray.join('+')
+    const query = finalArray.join('+')
 
     let currentIteration = 0
-    let allLeads = []
+    const allLeads = []
 
     // console.log(query)
     await page.goto(`https://www.google.com/search?q=${query}`)
@@ -32,13 +32,13 @@ export default async (
 
     while (currentIteration < pagesToCrawl) {
       // get ads details
-      let adsData = await page.evaluate(() => {
-        let ads = []
+      const adsData = await page.evaluate(() => {
+        const ads = []
         // get the ads elements
-        let adsElms = document.querySelectorAll('li.ads-ad')
+        const adsElms = document.querySelectorAll('li.ads-ad')
         // get the hotel data
         adsElms.forEach(function main (adElement) {
-          let adJson = {}
+          const adJson = {}
           try {
             adJson.adName = adElement.querySelector('a h3').innerText
             adJson.adLink = adElement
@@ -65,7 +65,7 @@ export default async (
 
     // console.log(allLeads)
     // Curate results
-    let final = allLeads.reduce((x, { adLink, adName }) => {
+    const final = allLeads.reduce((x, { adLink, adName }) => {
       let domain = adLink.match(/(:\/\/)([^/]*)\//)
       domain = domain ? domain[2] : adLink
       if (!x.find(u => u.adLink.includes(domain))) {
@@ -77,30 +77,38 @@ export default async (
       return x
     }, [])
 
-    let completeItems = []
-    for (let x of final) {
+    const completeItems = []
+    for (const x of final) {
       if (!x.adLink.includes('googleadservices') && x.adLink.includes('http') && x.adLink.includes('https')) {
         try {
           await page.goto(x.adLink)
         } catch (e) {
           console.log(e)
         }
-        let completeData = await page.evaluate(() => {
-          let phoneRegex = /\(?([0-9]{3})\)?([ -.]?)([0-9]{3})([ -.])([0-9]{4})/
-          let phones = []
-          let phoneArray = Array.from(document.querySelectorAll('*'))
-          for (let l of phoneArray) {
+        const completeData = await page.evaluate(() => {
+          const phoneRegex = /\(?([0-9]{3})\)?([ -.]?)([0-9]{3})([ -.])([0-9]{4})/
+          const emailRegex = /([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/
+          const phones = []
+          const emails = []
+          const theArray = Array.from(document.querySelectorAll('*'))
+          for (const l of theArray) {
             if (l && l.innerText && l.innerText.match(phoneRegex)) {
               phones.push(phoneRegex.exec(l.innerText)[0].toString())
             }
+            if (l && l.innerText && l.innerText.match(emailRegex)) {
+              emails.push(emailRegex.exec(l.innerText)[0].toString())
+            }
           }
-          let filtered = y => y.filter((v, i) => y.indexOf(v) === i)
-          return filtered(phones)
+          const filtered = y => y.filter((v, i) => y.indexOf(v) === i)
+          const phonesFinal = filtered(phones)
+          const emailsFinal = filtered(emails)
+          return { phonesFinal, emailsFinal }
         })
 
         completeItems.push({
           adLink: x.adLink,
-          adPhones: completeData,
+          adPhones: completeData.phonesFinal,
+          adEmails: completeData.emailsFinal,
           adName: x.adName
         })
       }
