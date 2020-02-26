@@ -33,6 +33,6 @@ import leadModel from './schema/lead'
   })
 
   app.listen({ port: process.env.PORT }, () =>
-    console.log(`🚀 Server ready at http://localhost:3003${server.graphqlPath}`)
+    console.log(`🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`)
   )
 })()
