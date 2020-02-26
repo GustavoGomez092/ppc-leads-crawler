@@ -1,18 +1,26 @@
 import mongoose, { Schema } from 'mongoose'
 
 const leadModel = new Schema({
-	adName: {
-		type: String,
-		required: true
-	},
-	adLink: {
-		type: String,
-		required: true
-	},
-	adPhones: [{
-		type: String,
-		required: false,
-	}]
+  adName: {
+    type: String,
+    required: true
+  },
+  adLink: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true
+  },
+  adPhones: [{
+    type: String,
+    required: false
+  }],
+  adEmails: [{
+    type: String,
+    required: false
+  }]
+}, {
+  timestamps: true
 })
 
 export default mongoose.model('LeadModel', leadModel)
