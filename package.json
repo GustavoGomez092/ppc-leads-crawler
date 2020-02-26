@@ -21,6 +21,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
+    "json2xls": "^0.1.2",
     "mongoose": "^5.9.2",
     "puppeteer": "^1.19.0"
   },
