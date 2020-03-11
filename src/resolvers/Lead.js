@@ -14,8 +14,10 @@ export default {
             try {
               await leadModel.create({
                 ...lead,
-                keyword: `${service} ${lastName} ${zipCode} ${state} ${city}`,
-                crawledBy
+                keyword: `${service}`,
+                crawledBy,
+                state: `${state}`,
+                city: `${city}`
               })
             } catch (e) {
               console.log('found a duplicate')
@@ -23,10 +25,12 @@ export default {
           }
         }
 
-        const count = await leadModel.countDocuments({ createdAt: 		{
-		  $gte: moment().startOf('day').toDate(),
-		  $lte: moment().endOf('day').toDate()
-		} })
+        const count = await leadModel.countDocuments({
+          createdAt: {
+            $gte: moment().startOf('day').toDate(),
+            $lte: moment().endOf('day').toDate()
+          }
+        })
         return count
       } catch (e) {
         console.log(e)
