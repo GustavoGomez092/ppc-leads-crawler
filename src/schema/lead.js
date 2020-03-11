@@ -26,10 +26,6 @@ const leadModel = new Schema({
   crawledBy: {
     type: String,
     required: false
-  },
-  createdAt: {
-    type: Date,
-    required: true
   }
 }, {
   timestamps: true
