@@ -9,17 +9,15 @@ export default {
       try {
         const leads = await crawler(service, lastName, zipCode, state, city, pagesToCrawl)
 
-        if (leads.length) {
-          for (const lead of leads) {
-            try {
-              await leadModel.create({
-                ...lead,
-                keyword: `${service} ${lastName} ${zipCode} ${state} ${city}`,
-                crawledBy
-              })
-            } catch (e) {
-              console.log('found a duplicate')
-            }
+        for (const lead of leads) {
+          try {
+            await leadModel.create({
+              ...lead,
+              keyword: `${service} ${lastName} ${zipCode} ${state} ${city}`,
+              crawledBy
+            })
+          } catch (e) {
+            console.log('found a duplicate')
           }
         }
 
