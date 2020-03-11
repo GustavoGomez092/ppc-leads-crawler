@@ -10,12 +10,14 @@ export default gql`
 
     extend type Query {
       findLeads(
+        crawledBy: String
         service: String
         lastName: String
         zipCode: Int
         state: String
         city: String
         pagesToCrawl: Int
+        keyword: String
       ): Int
     }
   `
