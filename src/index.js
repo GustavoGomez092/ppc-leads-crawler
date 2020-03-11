@@ -7,7 +7,6 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 import json2xls from 'json2xls'
 import leadModel from './schema/lead'
-import fs from 'fs'
 import moment from 'moment'
 
 (async () => {
@@ -27,16 +26,15 @@ import moment from 'moment'
 
   app.get('/download', async (req, res) => {
     try {
-      const data = await leadModel.find({ createdAt:
-		{
-		  $gte: moment().startOf('day').toDate(),
-		  $lte: moment().endOf('day').toDate()
-		}
-	  }, { __v: 0, _id: 0, updatedAt: 0 })
+      const data = await leadModel.find({
+        createdAt:
+        {
+          $gte: moment().startOf('day').toDate(),
+          $lte: moment().endOf('day').toDate()
+        }
+      }, { __v: 0, _id: 0, updatedAt: 0 })
       const parsed = data.map(u => u.toObject())
-      console.log(parsed)
       res.xls('data.xlsx', parsed)
-
     } catch (e) {
       throw new ApolloError(e)
     }
