@@ -8,6 +8,7 @@ import 'dotenv/config'
 import json2xls from 'json2xls'
 import leadModel from './schema/lead'
 import fs from 'fs'
+import moment from 'moment'
 
 (async () => {
   const server = new ApolloServer({ typeDefs, resolvers })
@@ -26,9 +27,9 @@ import fs from 'fs'
 
   app.get('/download', async (req, res) => {
     try {
-      const data = await leadModel.find({ createdAt: new Date() }, { __v: 0, _id: 0, updatedAt: 0 })
+      const data = await leadModel.find({ createdAt: moment().startOf('day').toDate() }, { __v: 0, _id: 0, updatedAt: 0 })
       res.xls('data.xlsx', data.map(u => u.toObject()))
-	  fs.writeFileSync('data.xlsx', json2xls(data, { fields: ['adPhones', 'adEmails', 'adLink', 'adName', 'createdAd'] }), 'binary')
+      fs.writeFileSync('data.xlsx', json2xls(data, { fields: ['adPhones', 'adEmails', 'adLink', 'adName', 'createdAd'] }), 'binary')
     } catch (e) {
       throw new ApolloError(e)
     }
