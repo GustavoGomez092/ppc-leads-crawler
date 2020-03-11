@@ -27,7 +27,7 @@ export default async (
     const allLeads = []
 
     // console.log(query)
-    await page.goto(`https://www.google.com/search?q=${query}`, {waitUntil: 'networkidle0'})
+    await page.goto(`https://www.google.com/search?q=${query}`, { waitUntil: 'networkidle0' })
 
     while (currentIteration < pagesToCrawl) {
       // get ads details
@@ -81,9 +81,9 @@ export default async (
       if (!x.adLink.includes('googleadservices') && x.adLink.includes('http') && x.adLink.includes('https')) {
         try {
           await page.goto(x.adLink, {
-			  timeout: 60000,
-			  waitUntil: 'networkidle0'
-		  })
+            timeout: 60000,
+            waitUntil: 'networkidle0'
+          })
         } catch (e) {
           console.log(e)
         }

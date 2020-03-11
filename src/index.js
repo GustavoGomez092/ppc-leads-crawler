@@ -29,7 +29,9 @@ import moment from 'moment'
     try {
       const data = await leadModel.find({ createdAt: moment().startOf('day').toDate() }, { __v: 0, _id: 0, updatedAt: 0 })
       res.xls('data.xlsx', data.map(u => u.toObject()))
-      fs.writeFileSync('data.xlsx', json2xls(data, { fields: ['adPhones', 'adEmails', 'adLink', 'adName', 'createdAd'] }), 'binary')
+      fs.writeFileSync(
+        'data.xlsx',
+        json2xls(data, { fields: ['adPhones', 'adEmails', 'adLink', 'adName', 'keyword', 'crawledBy', 'createdAd'] }), 'binary')
     } catch (e) {
       throw new ApolloError(e)
     }
