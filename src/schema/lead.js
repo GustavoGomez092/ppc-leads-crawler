@@ -18,7 +18,15 @@ const leadModel = new Schema({
   adEmails: [{
     type: String,
     required: false
-  }]
+  }],
+  keyword: {
+    type: String,
+    required: false
+  },
+  crawledBy: {
+    type: String,
+    required: false
+  }
 }, {
   timestamps: true
 })

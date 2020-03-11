@@ -89,7 +89,7 @@ export default async (
           console.log(e)
         }
         const completeData = await page.evaluate(() => {
-          const phoneRegex = /\(?([0-9]{3})\)?([ -.]?)([0-9]{3})([ -.])([0-9]{4})/
+          const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
           const emailRegex = /([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/
           const phones = []
           const emails = []
