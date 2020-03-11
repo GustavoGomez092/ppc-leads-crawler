@@ -27,8 +27,7 @@ export default async (
     const allLeads = []
 
     // console.log(query)
-    await page.goto(`https://www.google.com/search?q=${query}`)
-    await page.waitForSelector('#navcnt')
+    await page.goto(`https://www.google.com/search?q=${query}`, {waitUntil: 'networkidle0'})
 
     while (currentIteration < pagesToCrawl) {
       // get ads details
@@ -57,7 +56,7 @@ export default async (
       allLeads.push(...adsData)
 
       // Click next page
-      await Promise.all([page.click('.cur+td > a'), page.waitForNavigation()])
+      await Promise.all([page.click(`a[aria-label="Page ${currentIteration + 2}"]`), page.waitForNavigation()])
 
       // increase the iterator
       currentIteration++
