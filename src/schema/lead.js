@@ -28,8 +28,8 @@ const leadModel = new Schema({
     required: false
   },
   createdAt: {
-	type: Date,
-	required: true
+    type: Date,
+    required: true
   }
 }, {
   timestamps: true
