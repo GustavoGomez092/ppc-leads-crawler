@@ -25,7 +25,7 @@ import leadModel from './schema/lead'
 
   app.get('/download', async (req, res) => {
     try {
-      const data = await leadModel.find({}, { __v: 0, _id: 0, updatedAt: 0 })
+      const data = await leadModel.find({ createdAt: new Date() }, { __v: 0, _id: 0, updatedAt: 0 })
       res.xls('data.xlsx', data.map(u => u.toObject()))
     } catch (e) {
       throw new ApolloError(e)
