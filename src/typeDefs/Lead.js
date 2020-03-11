@@ -17,7 +17,6 @@ export default gql`
         state: String
         city: String
         pagesToCrawl: Int
-        keyword: String
       ): Int
     }
   `
