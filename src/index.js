@@ -27,13 +27,16 @@ import moment from 'moment'
 
   app.get('/download', async (req, res) => {
     try {
-      const data = await leadModel.find({ createdAt: moment().startOf('day').toDate() }, { __v: 0, _id: 0, updatedAt: 0 })
+      const data = await leadModel.find({ createdAt:
+		{
+		  $gte: moment().startOf('day').toDate(),
+		  $lte: moment().endOf('day').toDate()
+		}
+	  }, { __v: 0, _id: 0, updatedAt: 0 })
       const parsed = data.map(u => u.toObject())
       console.log(parsed)
       res.xls('data.xlsx', parsed)
-      fs.writeFileSync(
-        'data.xlsx',
-        json2xls(data, { fields: ['adPhones', 'adEmails', 'adLink', 'adName', 'keyword', 'crawledBy', 'createdAd'] }), 'binary')
+
     } catch (e) {
       throw new ApolloError(e)
     }

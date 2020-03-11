@@ -23,7 +23,10 @@ export default {
           }
         }
 
-        const count = await leadModel.countDocuments({ createdAt: { $gte: moment().startOf('day').toDate() } })
+        const count = await leadModel.countDocuments({ createdAt: 		{
+		  $gte: moment().startOf('day').toDate(),
+		  $lte: moment().endOf('day').toDate()
+		} })
         return count
       } catch (e) {
         console.log(e)
