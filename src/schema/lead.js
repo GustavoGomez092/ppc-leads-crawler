@@ -23,6 +23,14 @@ const leadModel = new Schema({
     type: String,
     required: false
   },
+  city: {
+    type: String,
+    required: false
+  },
+  state: {
+    type: String,
+    required: false
+  },
   crawledBy: {
     type: String,
     required: false
