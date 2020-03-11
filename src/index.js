@@ -7,6 +7,7 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 import json2xls from 'json2xls'
 import leadModel from './schema/lead'
+import fs from 'fs'
 
 (async () => {
   const server = new ApolloServer({ typeDefs, resolvers })
@@ -15,7 +16,7 @@ import leadModel from './schema/lead'
 
   const app = express()
   server.applyMiddleware({ app })
-  await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASS}${DB_URI}`, {
+  await mongoose.connect(`mongodb://${DB_USER}${DB_PASS}${DB_URI}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -27,6 +28,7 @@ import leadModel from './schema/lead'
     try {
       const data = await leadModel.find({}, { __v: 0, _id: 0, updatedAt: 0 })
       res.xls('data.xlsx', data.map(u => u.toObject()))
+	  fs.writeFileSync('data.xlsx', json2xls(data, { fields: ['adPhones', 'adEmails', 'adLink', 'adName', 'createdAd'] }), 'binary')
     } catch (e) {
       throw new ApolloError(e)
     }

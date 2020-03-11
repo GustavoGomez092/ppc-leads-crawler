@@ -9,12 +9,17 @@ export default {
         const leads = await crawler(service, lastName, zipCode, state, city, pagesToCrawl)
 
         for (const lead of leads) {
-          await leadModel.create(lead)
+		  try {
+			await leadModel.create(lead)
+		  } catch(e) {
+			console.log('found a duplicate')
+		  }
         }
 
         const count = await leadModel.estimatedDocumentCount()
         return count
       } catch (e) {
+		console.log(e)
         throw new ApolloError(e)
       }
     }

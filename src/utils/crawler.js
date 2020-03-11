@@ -8,7 +8,7 @@ export default async (
   city,
   pagesToCrawl
 ) => {
-  const browser = await puppeteer.launch({ headless: true, slowMo: 200 })
+  const browser = await puppeteer.launch({ headless: false, slowMo: 200 })
   const page = await browser.newPage()
   try {
     // check what parameters were sent and build string
@@ -81,7 +81,10 @@ export default async (
     for (const x of final) {
       if (!x.adLink.includes('googleadservices') && x.adLink.includes('http') && x.adLink.includes('https')) {
         try {
-          await page.goto(x.adLink).setDefaultNavigationTimeout(60 * 1000)
+          await page.goto(x.adLink, {
+			  timeout: 60000,
+			  waitUntil: 'networkidle0'
+		  })
         } catch (e) {
           console.log(e)
         }
@@ -93,10 +96,10 @@ export default async (
           const theArray = Array.from(document.querySelectorAll('*'))
           for (const l of theArray) {
             if (l && l.innerText && l.innerText.match(phoneRegex)) {
-              phones.push(phoneRegex.exec(l.innerText)[0].toString())
+              phones.push(phoneRegex.exec(l.innerText)[0].toString().trim())
             }
             if (l && l.innerText && l.innerText.match(emailRegex)) {
-              emails.push(emailRegex.exec(l.innerText)[0].toString())
+              emails.push(emailRegex.exec(l.innerText)[0].toString().trim())
             }
           }
           const filtered = y => y.filter((v, i) => y.indexOf(v) === i)
@@ -106,10 +109,10 @@ export default async (
         })
 
         completeItems.push({
-          adLink: x.adLink,
+          adLink: x.adLink.trim(),
           adPhones: completeData.phonesFinal,
           adEmails: completeData.emailsFinal,
-          adName: x.adName
+          adName: x.adName.trim()
         })
       }
     }
