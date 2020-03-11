@@ -17,6 +17,7 @@ export default {
               crawledBy
             })
           } catch (e) {
+			console.log(e)
             console.log('found a duplicate')
           }
         }
