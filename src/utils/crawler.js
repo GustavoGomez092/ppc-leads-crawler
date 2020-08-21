@@ -34,14 +34,14 @@ export default async (
       const adsData = await page.evaluate(() => {
         const ads = []
         // get the ads elements
-        const adsElms = document.querySelectorAll('li.ads-ad')
+        const adsElms = document.querySelectorAll('li.ads-fr')
         // get the hotel data
         adsElms.forEach(function main (adElement) {
           const adJson = {}
           try {
-            adJson.adName = adElement.querySelector('a h3').innerText
+            adJson.adName = adElement.querySelector('a div[role="heading"]').innerText
             adJson.adLink = adElement
-              .querySelector('a.V0MxL')
+              .querySelector('a')
               .getAttribute('href')
           } catch (e) {
             console.log(e)
